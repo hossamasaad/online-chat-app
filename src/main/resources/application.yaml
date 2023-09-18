@@ -1,0 +1,17 @@
+# Database configuration
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: hossam_asaad
+      password: hossam_asaad
+      database: chatapp
+      auto-index-creation: true
+      authentication-database: admin
+
+
+# Reduce Logging
+logging:
+  level:
+    root: warn
