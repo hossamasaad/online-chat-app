@@ -23,25 +23,32 @@ public class ChatRoom {
     private String id;
     private Type Type;
     private Date createdAt;
-    private List<String> messageList;
     private List<String> userList;
+    private List<String> adminList;
+    private List<String> messageList;
 
-    public void addMessage(String messageId){
-        if (this.messageList == null)
-            this.messageList = new ArrayList<>();
-
-        this.messageList.add(messageId);
-    }
-
-    public void addUser(String userId){
+    public void addUser(String userId) {
         if (this.userList == null)
             this.userList = new ArrayList<>();
 
         this.userList.add(userId);
     }
 
+    public void addAdmin(String userId) {
+        if (this.adminList == null)
+            this.adminList = new ArrayList<>();
+
+        this.adminList.add(userId);
+    }
+
+    public void addMessage(String messageId) {
+        if (this.messageList == null)
+            this.messageList = new ArrayList<>();
+
+        this.messageList.add(messageId);
+    }
+
     public enum Type {
-        GROUP,
-        PRIVATE
+        GROUP, PRIVATE
     }
 }

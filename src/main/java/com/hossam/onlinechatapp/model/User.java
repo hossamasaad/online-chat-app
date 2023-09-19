@@ -28,19 +28,19 @@ public class User {
     private Status status;
     private Date createdAt;
 
-    private List<String> groupsList;
+    private List<String> chatRoomsList;
     private List<String> friendsList;
 
 
-    public void addGroup(String groupId){
-        if (this.groupsList == null)
-            this.groupsList = new ArrayList<>();
+    public void addChatRoom(String groupId) {
+        if (this.chatRoomsList == null)
+            this.chatRoomsList = new ArrayList<>();
 
-        this.groupsList.add(groupId);
+        this.chatRoomsList.add(groupId);
     }
 
 
-    public void addFriend(String friendId){
+    public void addFriend(String friendId) {
         if (this.friendsList == null)
             this.friendsList = new ArrayList<>();
 
