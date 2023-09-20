@@ -15,3 +15,12 @@ spring:
 logging:
   level:
     root: warn
+
+
+application:
+  security:
+    jwt:
+      secret-key: B32834/6AJLITlnpRMnj1JrXZcsP+jE7+6g1JMn/OHu3+/bKdHwM1tPE6ij54JAYuamYQ8mRlp9xzHHHAT2U6igP893lw1LJmr+oSoz4eHduiPLMkKv8meIuR9yaxhSxnuVKHlhUFhcaMYZwPX/0HTc4UR/3/bJ0fqk5hQWf9HInM5/f3JLUJ1DxElGQCJB3UCHcG/HGHRbr21hW6/9bEmhTI75iQkESS1uvcDQPXE19A0kfu8nEX1yQfrhY1YRy+LWqvanlTBY5jVBUvQZUTwgldZX44GeM2ExLunzr9TPyW2ZpJUi/yI/kJoTaa3hCyJDQBh/FhIys/UxDK/IzodP5rEzdOnWVAe2AfXMZn4k=
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
