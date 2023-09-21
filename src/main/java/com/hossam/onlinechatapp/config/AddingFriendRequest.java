@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddingFriendRequest {
-
     private String userId;
     private String friendId;
-
 }
