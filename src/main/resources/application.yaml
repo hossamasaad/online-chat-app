@@ -10,6 +10,14 @@ spring:
       auto-index-creation: true
       authentication-database: admin
 
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: <GITHUB CLIENT ID>
+            client-secret: <GITHUB CLIENT SECRET>
+
 
 # Reduce Logging
 logging:
@@ -24,3 +32,5 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+
+# GitHub Login

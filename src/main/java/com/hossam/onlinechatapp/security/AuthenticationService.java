@@ -1,9 +1,8 @@
-package com.hossam.onlinechatapp.service;
+package com.hossam.onlinechatapp.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hossam.onlinechatapp.config.AuthRequest;
 import com.hossam.onlinechatapp.config.AuthResponse;
-import com.hossam.onlinechatapp.config.JwtTokenProvider;
 import com.hossam.onlinechatapp.model.Token;
 import com.hossam.onlinechatapp.model.User;
 import com.hossam.onlinechatapp.repository.TokenRepository;
@@ -34,7 +33,13 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenRepository tokenRepository, JwtTokenProvider jwtTokenProvider, AuthenticationManager authenticationManager) {
+    public AuthenticationService(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            TokenRepository tokenRepository,
+            JwtTokenProvider jwtTokenProvider,
+            AuthenticationManager authenticationManager
+    ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenRepository = tokenRepository;

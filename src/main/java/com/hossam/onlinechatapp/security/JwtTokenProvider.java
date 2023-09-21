@@ -1,4 +1,4 @@
-package com.hossam.onlinechatapp.config;
+package com.hossam.onlinechatapp.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

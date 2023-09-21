@@ -1,4 +1,4 @@
-package com.hossam.onlinechatapp.service;
+package com.hossam.onlinechatapp.security;
 
 import com.hossam.onlinechatapp.model.Token;
 import com.hossam.onlinechatapp.repository.TokenRepository;

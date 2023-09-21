@@ -1,7 +1,6 @@
 package com.hossam.onlinechatapp.security;
 
 
-import com.hossam.onlinechatapp.config.JwtTokenProvider;
 import com.hossam.onlinechatapp.repository.TokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -27,11 +26,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
 
     @Autowired
-    public JwtAuthenticationFilter(TokenRepository tokenRepository, JwtTokenProvider jwtTokenProvider, UserDetailsService userDetailsService) {
+    public JwtAuthenticationFilter(
+            TokenRepository tokenRepository,
+            JwtTokenProvider jwtTokenProvider,
+            UserDetailsService userDetailsService
+    ) {
         this.tokenRepository = tokenRepository;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userDetailsService = userDetailsService;
     }
+
 
     @Override
     protected void doFilterInternal(
@@ -40,12 +44,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
-        if (request.getServletPath().contains("/api/auth")) {
+        if (
+                request.getServletPath().contains("/api/auth") ||
+                request.getServletPath().contains("/api/oauth")
+        ) {
             filterChain.doFilter(request, response);
             return;
         }
 
         final String authHeader = request.getHeader("Authorization");
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         final String jwtToken = authHeader.substring(7);
         final String email = jwtTokenProvider.extractEmail(jwtToken);
 
