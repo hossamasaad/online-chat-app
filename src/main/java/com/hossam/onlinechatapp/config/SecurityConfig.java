@@ -55,13 +55,12 @@ public class SecurityConfig {
         );
 
         http.oauth2Login(
-                oAuth -> {
-                    oAuth.defaultSuccessUrl("/api/oauth/authenticate");
-                    oAuth.authorizationEndpoint(
-                            authorization -> authorization.baseUri("/api/oauth")
-                    );
-                    oAuth.successHandler(oAuth2Handler);
-                }
+            oAuth -> {
+                oAuth.authorizationEndpoint(
+                        authorization -> authorization.baseUri("/api/oauth")
+                );
+                oAuth.successHandler(oAuth2Handler);
+            }
         );
 
         http.logout(

@@ -48,7 +48,7 @@ public class AuthenticationService {
     }
 
 
-    public AuthResponse register(User user) {
+    public User register(User user) {
         User createdUser = User.builder()
                                .id(null)
                                .firstName(user.getFirstName())
@@ -58,17 +58,8 @@ public class AuthenticationService {
                                .createdAt(new Timestamp(System.currentTimeMillis()))
                                .build();
 
-        // Save the suer
-        User savedUser = userRepository.save(createdUser);
 
-        // Generate Tokens
-        String jwtToken = jwtTokenProvider.generateToken(savedUser);
-        String refreshToken = jwtTokenProvider.generateRefreshToken(savedUser);
-
-        // Save the token
-        saveToken(savedUser, jwtToken);
-
-        return new AuthResponse(jwtToken, refreshToken);
+        return userRepository.save(createdUser);
     }
 
 

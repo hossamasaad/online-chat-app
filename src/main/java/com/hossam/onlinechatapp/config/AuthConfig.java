@@ -1,6 +1,5 @@
 package com.hossam.onlinechatapp.config;
 
-
 import com.hossam.onlinechatapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 @Configuration
 public class AuthConfig {
 
@@ -24,8 +24,8 @@ public class AuthConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return userRepository::findUserByEmail;
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
@@ -37,8 +37,8 @@ public class AuthConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public UserDetailsService userDetailsService() {
+        return userRepository::findUserByEmail;
     }
 
     @Bean
