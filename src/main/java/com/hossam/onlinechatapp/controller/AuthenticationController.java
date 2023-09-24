@@ -4,7 +4,7 @@ package com.hossam.onlinechatapp.controller;
 import com.hossam.onlinechatapp.config.AuthRequest;
 import com.hossam.onlinechatapp.config.AuthResponse;
 import com.hossam.onlinechatapp.model.User;
-import com.hossam.onlinechatapp.security.AuthenticationService;
+import com.hossam.onlinechatapp.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
