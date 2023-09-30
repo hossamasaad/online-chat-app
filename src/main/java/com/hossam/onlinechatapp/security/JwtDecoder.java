@@ -1,4 +1,5 @@
-package com.hossam.onlinechatapp.security.jwt;
+package com.hossam.onlinechatapp.security;
+
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -34,19 +35,20 @@ public class JwtDecoder {
 
     private void startDecoding() {
         Claims extractedClaims = Jwts.parserBuilder()
-                                     .setSigningKey(Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY)))
-                                     .build()
-                                     .parseClaimsJws(token)
-                                     .getBody();
+                .setSigningKey(Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY)))
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
 
         this.subject = extractedClaims.getSubject();
         this.expirationDate = extractedClaims.getExpiration();
         this.claims = extractedClaims.entrySet()
-                                     .stream()
-                                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public Object getClaim(String claimName){
         return claims.get(claimName);
     }
+
 }

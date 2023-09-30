@@ -1,64 +1,34 @@
 package com.hossam.onlinechatapp.controller;
 
-import com.hossam.onlinechatapp.config.AddingFriendRequest;
-import com.hossam.onlinechatapp.model.User;
+import com.hossam.onlinechatapp.security.AuthorizeFilter;
 import com.hossam.onlinechatapp.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService userService;
+    private final AuthorizeFilter authorizeFilter;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthorizeFilter authorizeFilter) {
         this.userService = userService;
+        this.authorizeFilter = authorizeFilter;
     }
 
-    @GetMapping
-    public List<User> getUsers() {
-        return userService.findAll();
+    @PostMapping("/add-friend/{friendEmail}")
+    public void addFriend(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @PathVariable String friendEmail
+    ){
+        String userEmail = authorizeFilter.authorizerRequestAndGetSubject(request, response);
+        userService.addFriend(userEmail, friendEmail);
     }
 
-    @GetMapping("/{userId}")
-    public User getUser(@PathVariable String userId) {
-        return userService.findByID(userId);
-    }
-
-
-    @PutMapping("/{userId}")
-    public User updateUser(
-            @PathVariable String userId,
-            @RequestBody User newUser
-    ) {
-        // Retrieve the user by user id
-        User oldUser = userService.findByID(userId);
-        if (userId.equals(newUser.getId()))
-            throw new DataIntegrityViolationException("You can't update the user ID");
-
-        User updatedUser = userService.mergeUsers(oldUser, newUser);
-        return userService.save(updatedUser);
-    }
-
-    @DeleteMapping("/{userId}")
-    public User deleteUser(@PathVariable String userId) {
-        return userService.deleteUser(userId);
-    }
-
-    @PostMapping("/friends")
-    public String addFriend(
-            @RequestBody AddingFriendRequest addingFriendRequest
-    ) {
-        userService.addFriend(
-                addingFriendRequest.getUserId(),
-                addingFriendRequest.getFriendId()
-        );
-        return "Added Successfully!";
-    }
 }

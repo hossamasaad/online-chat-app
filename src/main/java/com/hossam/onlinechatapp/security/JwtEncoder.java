@@ -1,12 +1,11 @@
-package com.hossam.onlinechatapp.security.jwt;
+package com.hossam.onlinechatapp.security;
 
-
+import com.hossam.onlinechatapp.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -23,30 +22,34 @@ public class JwtEncoder {
     @Value("${application.security.jwt.refresh.expiration}")
     private long REFRESH_TOKEN_EXPIRATION;
 
-    @Getter private String accessToken;
-    @Getter private String refreshToken;
-    private UserDetails userDetails;
+    @Getter
+    private String accessToken;
+
+    @Getter
+    private String refreshToken;
+
+    private User user;
     private Map<String, Object> claims;
 
-    public void encode(UserDetails userDetails) {
-        this.encode(userDetails, new HashMap<>());
+    public void encode(User user) {
+        this.encode(user, new HashMap<>());
     }
 
-    public void encode(UserDetails userDetails, Map<String, Object> claims) {
-        this.userDetails = userDetails;
+    public void encode(User user, Map<String, Object> claims) {
+        this.user = user;
         this.claims = claims;
         this.accessToken = buildToken(ACCESS_TOKE_EXPIRATION);
         this.refreshToken = buildToken(REFRESH_TOKEN_EXPIRATION);
     }
 
     private String buildToken(long EXPIRATION) {
-         return Jwts.builder()
-                    .setClaims(claims)
-                    .setSubject(userDetails.getUsername())
-                    .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
-                    .signWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY)))
-                    .compact();
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(user.getEmail())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .signWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY)))
+                .compact();
     }
 
 }

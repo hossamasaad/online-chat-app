@@ -1,20 +1,15 @@
 package com.hossam.onlinechatapp.config;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
+@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthResponse {
 
-    @JsonProperty("access_token")
+    private String id;
     private String accessToken;
-
-    @JsonProperty("refresh_token")
-    private String refreshToken;
 
 }

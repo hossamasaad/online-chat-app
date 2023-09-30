@@ -1,19 +1,17 @@
 package com.hossam.onlinechatapp.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
 @Data
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Document
@@ -21,34 +19,15 @@ public class ChatRoom {
 
     @Id
     private String id;
-    private Type Type;
-    private Date createdAt;
-    private List<String> userList;
-    private List<String> adminList;
-    private List<String> messageList;
+    private String title;
+    private List<String> users = new ArrayList<>();
+    private List<String> messages = new ArrayList<>();
 
     public void addUser(String userId) {
-        if (this.userList == null)
-            this.userList = new ArrayList<>();
-
-        this.userList.add(userId);
+        users.add(userId);
     }
 
-    public void addAdmin(String userId) {
-        if (this.adminList == null)
-            this.adminList = new ArrayList<>();
-
-        this.adminList.add(userId);
-    }
-
-    public void addMessage(String messageId) {
-        if (this.messageList == null)
-            this.messageList = new ArrayList<>();
-
-        this.messageList.add(messageId);
-    }
-
-    public enum Type {
-        GROUP, PRIVATE
+    public void addMessage(String message) {
+        messages.add(message);
     }
 }
